@@ -17,7 +17,7 @@ public class JuegoDeCartas {
         String[][] matrizCartas = new String[12][2];
         return matrizCartas;
     }
-    //Este metodo rellena la baraja de cartas
+    //Este metodo rellena la baraja de cartas con unas predefinidas
 
     public static String[][] agregarCartas(String nombreCarta, String puntaje, String[][] matrizCartas){
         for(int fila=0; fila<12; fila++ ){
