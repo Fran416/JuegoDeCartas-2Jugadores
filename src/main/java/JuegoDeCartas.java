@@ -1,12 +1,39 @@
-import java.util.Scanner;
+import java.util.Random;
 
 public class JuegoDeCartas {
     public static void main(String[] args) {
-        String[][] matriz= inicializarCartasJuego();
-        for (int fila=0; fila<matriz.length; fila++){
-            System.out.println(matriz[fila][0]);
+
+    }
+
+
+
+
+
+
+    //El metodo devuelve una matriz con las cartas de un jugador
+    public static String[][] obtenerCartas(String[][] matrizBarajaCartas) {
+        String[][] matrizJugador = new String[3][2];
+        while (true) {
+            int numeroRandom = obtenerNumeroRandom(12);
+            if (matrizBarajaCartas[numeroRandom][0] != null) {
+                matrizJugador[0][0]= matrizBarajaCartas[numeroRandom][0];
+                matrizJugador[1][0]= matrizBarajaCartas[numeroRandom][1];
+                eliminarCarta(numeroRandom, matrizBarajaCartas);
+            }
+
+            if (matrizBarajaCartas[3][0] != null){
+                return matrizJugador;
+            }
         }
     }
+    //Este metodo elimina una carta de la baraja
+    public static String[][] eliminarCarta(int numeroCarta, String[][] matrizBarajaCartas) {
+        matrizBarajaCartas[numeroCarta][0]=null;
+        matrizBarajaCartas[numeroCarta][1]=null;
+        return matrizBarajaCartas;
+    }
+
+
 
 
     //Esta funcion inicializa la baraja de cartas, generando la baraja para poder jugar
@@ -42,7 +69,11 @@ public class JuegoDeCartas {
                 return matrizCartas;
             }
         }
-
         return matrizCartas;
+    }
+
+    public static int obtenerNumeroRandom(int numeroMaximo){
+        Random rand = new Random();
+        return rand.nextInt(numeroMaximo);
     }
 }
