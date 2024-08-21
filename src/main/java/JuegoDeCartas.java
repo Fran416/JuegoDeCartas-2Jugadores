@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class JuegoDeCartas {
     public static void main(String[] args) {
+        menuPrincipal();
 
     }
     //Metodos del menu
@@ -12,17 +13,26 @@ public class JuegoDeCartas {
         System.out.println("------------ MenuPrincipal ------------");
         System.out.println("1. Jugar");
         System.out.println("2. Salir");
-        accionesMenu();
+        boolean variableAuxiliar = true;
+        while (variableAuxiliar){
+            variableAuxiliar = accionesMenu();
+
+        }
     }
 
-    public static void accionesMenu() {
+    public static boolean accionesMenu() {
         int seleccionUsuario = seleccionUsuario();
         switch (seleccionUsuario) {
             case 1:
-
+                String [][] barajaCartas = inicializarCartasJuego();
+                String [][] cartasPrimerJugador = obtenerCartas(barajaCartas);
+                String [][] cartasSegundoJugador = obtenerCartas(barajaCartas);
+                mostrarResultadoFinal(cartasPrimerJugador, cartasSegundoJugador);
+                return true;
+            case 2:
+                return false;
 
         }
-
     }
     //Este metodo comprueba la seleccion del usuario y que cumpla los requisitos necesarios
     public static int seleccionUsuario(){
@@ -47,6 +57,51 @@ public class JuegoDeCartas {
         Scanner teclado = new Scanner(System.in);
         return teclado.nextInt();
     }
+    //Fin metodos del menu
+
+
+    public static void mostrarResultadoFinal(String[][] matrizPrimerJugador, String[][] matrizSegundoJugador) {
+        int puntajePrimerJugador = obtenerPuntaje(matrizPrimerJugador);
+        int puntajeSegundoJugador = obtenerPuntaje(matrizSegundoJugador);
+        if (puntajePrimerJugador>20 && puntajeSegundoJugador>20){
+            System.out.println("Ambos jugadores pierden");
+            System.out.println("Puntaje jugador 1:"+puntajePrimerJugador);
+            System.out.println("Puntaje jugador 2:"+puntajeSegundoJugador);
+        } else if (puntajePrimerJugador > 20) {
+            System.out.println("El jugador 2 Gano");
+            System.out.println("Puntaje jugador 1:"+puntajePrimerJugador);
+            System.out.println("Puntaje jugador 2:"+puntajeSegundoJugador);
+        } else if (puntajeSegundoJugador > 20) {
+            System.out.println("El jugador 1 Gano");
+            System.out.println("Puntaje jugador 1:"+puntajePrimerJugador);
+            System.out.println("Puntaje jugador 2:"+puntajeSegundoJugador);
+        } else if (puntajePrimerJugador>puntajeSegundoJugador) {
+            System.out.println("El jugador 1 Gano");
+            System.out.println("Puntaje jugador 1:"+puntajePrimerJugador);
+            System.out.println("Puntaje jugador 2:"+puntajeSegundoJugador);
+        } else {
+            System.out.println("El jugador 2 Gano");
+            System.out.println("Puntaje jugador 1:"+puntajePrimerJugador);
+            System.out.println("Puntaje jugador 2:"+puntajeSegundoJugador);
+        }
+    }
+    public static int obtenerPuntaje(String[][] matrizJugador){
+        int primerPuntaje = Integer.parseInt(matrizJugador[0][1]);
+        int segundoPuntaje = Integer.parseInt(matrizJugador[1][1]);
+        int tercerPuntaje = Integer.parseInt(matrizJugador[2][1]);
+        int puntajeFinal = sumarPuntaje(primerPuntaje,segundoPuntaje,tercerPuntaje);
+        return puntajeFinal;
+    }
+
+
+    public static int sumarPuntaje(int primeraCarta, int segundaCarta, int terceraCarta){
+        return primeraCarta + segundaCarta + terceraCarta;
+    }
+
+
+
+
+
 
     //El metodo devuelve una matriz con las cartas de un jugador
     public static String[][] obtenerCartas(String[][] matrizBarajaCartas) {
